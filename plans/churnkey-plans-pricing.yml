@@ -1,0 +1,134 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Churnkey
+providerId: churnkey
+created: '2026-07-10'
+modified: '2026-07-10'
+reconciled: false
+tags:
+- Churn Prevention
+- Retention
+- Failed Payment Recovery
+- Subscriptions
+- Plans
+description: >-
+  Churnkey is priced as a monthly SaaS subscription with tiers scaled to a
+  customer's monthly churn volume, not as a per-call API product. The Starter
+  tier is publicly listed at $250/month (billed yearly) for teams under ~$5k/mo
+  in churn volume; Core and Intelligence are custom-priced for organizations
+  with roughly $10k+ monthly churn; and Enterprise is a custom quote. The React
+  SDK and MCP server are free on every plan. API, Webhook, and Slack integration
+  are included on all plans. Third-party analyses report that Churnkey has, at
+  times, used revenue-share-style pricing on recovered revenue; the official
+  pricing page as reviewed lists only fixed monthly tiers, so any percentage
+  component is not reconciled here.
+notes: >-
+  Only the Starter price ($250/mo, billed yearly) is publicly fixed; Core,
+  Intelligence, and Enterprise are custom. Verify current tiers, MRR/churn
+  thresholds, and any revenue-share terms directly with Churnkey during
+  reconciliation. The APIs themselves carry no separate per-call fee.
+sources:
+- https://churnkey.co/pricing
+- https://churnkey.co/
+- https://docs.churnkey.co/
+plans:
+- id: churnkey-starter
+  name: Starter
+  type: paid
+  description: >-
+    Entry tier for teams with less than ~$5k/mo churn volume. Includes unlimited
+    Cancel Flows, hosted Cancel Flows, unlimited dunning (Payment Recovery)
+    campaigns, powerful metrics, human support, and API/Webhook/Slack
+    integration.
+  entries:
+  - label: Monthly Subscription
+    name: starter_subscription
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $250/month (billed yearly)
+    userMultiplied: false
+  elements:
+  - name: Unlimited Cancel Flows
+  - name: Hosted Cancel Flows
+  - name: Unlimited Dunning Campaigns
+  - name: Powerful Metrics
+  - name: API, Webhook, and Slack Integration
+  - name: Human Support
+- id: churnkey-core
+  name: Core
+  type: paid
+  description: >-
+    For organizations with roughly $10k+ monthly churn. Everything in Starter
+    plus A/B testing, unlimited segmentation, customer timelines, rules-based
+    retry logic, and native integrations. Custom pricing.
+  entries:
+  - label: Custom Subscription
+    name: core_subscription
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: custom (contact sales)
+    userMultiplied: false
+  elements:
+  - name: A/B Testing
+  - name: Unlimited Segmentation
+  - name: Customer Timelines
+  - name: Rules-based Retry Logic
+  - name: Native Integrations
+- id: churnkey-intelligence
+  name: Intelligence
+  type: paid
+  description: >-
+    For organizations with roughly $10k+ monthly churn. Everything in Core plus
+    Adaptive Offers, Account Agent, Feedback AI, AI-powered translations,
+    compliance automation, and self-improving Precision Retries. Custom pricing.
+  entries:
+  - label: Custom Subscription
+    name: intelligence_subscription
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: custom (contact sales)
+    userMultiplied: false
+  elements:
+  - name: Adaptive Offers
+  - name: Account Agent
+  - name: Feedback AI
+  - name: AI-powered Translations
+  - name: Compliance Automation
+  - name: Self-Improving Precision Retries
+- id: churnkey-enterprise
+  name: Enterprise
+  type: enterprise
+  description: >-
+    Custom quote for high-volume subscription businesses needing negotiated
+    terms, security review, and dedicated support. Contact Churnkey.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Custom Volume Pricing
+  - name: Dedicated Support
+  - name: Security Review and SLAs
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

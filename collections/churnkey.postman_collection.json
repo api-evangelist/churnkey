@@ -1,0 +1,180 @@
+{
+  "info": {
+    "name": "Churnkey API",
+    "description": "Server-to-server REST endpoints for Churnkey retention infrastructure. Data API (Cancel Flow sessions/aggregations and GDPR requests) at https://api.churnkey.co/v1/data and the Event/Customer API (event tracking, customer updates, billing contacts for Failed Payment Recovery) at https://api.churnkey.co/v1/api. All requests require x-ck-api-key and x-ck-app headers. The Data API uses a Data API key; event and billing-contact endpoints use a Churnkey API key. Cancel Flows themselves are embedded client-side via the JS SDK with an HMAC authHash and are not part of this collection.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.churnkey.co/v1", "type": "string" },
+    { "key": "apiKey", "value": "", "type": "string" },
+    { "key": "appId", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Sessions (Data API)",
+      "item": [
+        {
+          "name": "List Cancel Flow sessions",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "x-ck-api-key", "value": "{{apiKey}}" },
+              { "key": "x-ck-app", "value": "{{appId}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/sessions?limit=100",
+              "host": ["{{baseUrl}}"],
+              "path": ["data", "sessions"],
+              "query": [
+                { "key": "limit", "value": "100" },
+                { "key": "skip", "value": "0", "disabled": true },
+                { "key": "startDate", "value": "", "disabled": true },
+                { "key": "endDate", "value": "", "disabled": true },
+                { "key": "customerId", "value": "", "disabled": true },
+                { "key": "planId", "value": "", "disabled": true },
+                { "key": "offerType", "value": "", "disabled": true },
+                { "key": "saveType", "value": "", "disabled": true }
+              ]
+            },
+            "description": "Returns an array of Cancel Flow sessions (max 10,000 per request) with rich filters."
+          }
+        },
+        {
+          "name": "Aggregate session data",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "x-ck-api-key", "value": "{{apiKey}}" },
+              { "key": "x-ck-app", "value": "{{appId}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/data/session-aggregation?breakdown=month,offerType",
+              "host": ["{{baseUrl}}"],
+              "path": ["data", "session-aggregation"],
+              "query": [{ "key": "breakdown", "value": "month,offerType" }]
+            },
+            "description": "Returns grouped session counts with optional breakdown fields."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Data Subject Requests (Data API)",
+      "item": [
+        {
+          "name": "GDPR access request",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "x-ck-api-key", "value": "{{apiKey}}" },
+              { "key": "x-ck-app", "value": "{{appId}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@example.com\"\n}" },
+            "url": { "raw": "{{baseUrl}}/data/dsr/access", "host": ["{{baseUrl}}"], "path": ["data", "dsr", "access"] },
+            "description": "Retrieve all personal data Churnkey has stored for a user."
+          }
+        },
+        {
+          "name": "GDPR deletion request",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "x-ck-api-key", "value": "{{apiKey}}" },
+              { "key": "x-ck-app", "value": "{{appId}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@example.com\"\n}" },
+            "url": { "raw": "{{baseUrl}}/data/dsr/delete", "host": ["{{baseUrl}}"], "path": ["data", "dsr", "delete"] },
+            "description": "Delete the personal data Churnkey has stored for a user."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Events",
+      "item": [
+        {
+          "name": "Create a customer event",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "x-ck-api-key", "value": "{{apiKey}}" },
+              { "key": "x-ck-app", "value": "{{appId}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"event\": \"upgraded_plan\",\n  \"customerId\": \"cus_123\",\n  \"eventData\": { \"plan\": \"pro\" }\n}" },
+            "url": { "raw": "{{baseUrl}}/api/events/new", "host": ["{{baseUrl}}"], "path": ["api", "events", "new"] },
+            "description": "Records a single customer event."
+          }
+        },
+        {
+          "name": "Create up to 100 events",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "x-ck-api-key", "value": "{{apiKey}}" },
+              { "key": "x-ck-app", "value": "{{appId}}" }
+            ],
+            "body": { "mode": "raw", "raw": "[\n  { \"event\": \"login\", \"customerId\": \"cus_123\" },\n  { \"event\": \"login\", \"customerId\": \"cus_456\" }\n]" },
+            "url": { "raw": "{{baseUrl}}/api/events/bulk", "host": ["{{baseUrl}}"], "path": ["api", "events", "bulk"] },
+            "description": "Records up to 100 customer events in a single request."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Customers",
+      "item": [
+        {
+          "name": "Update customer or user data",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "x-ck-api-key", "value": "{{apiKey}}" },
+              { "key": "x-ck-app", "value": "{{appId}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"customerId\": \"cus_123\",\n  \"customerData\": { \"company\": \"Acme\" }\n}" },
+            "url": { "raw": "{{baseUrl}}/api/events/customer-update", "host": ["{{baseUrl}}"], "path": ["api", "events", "customer-update"] },
+            "description": "Updates a customer's attributes used for segmentation and email merge tags."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Billing Contacts (Payment Recovery)",
+      "item": [
+        {
+          "name": "Set billing contacts for a customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "x-ck-api-key", "value": "{{apiKey}}" },
+              { "key": "x-ck-app", "value": "{{appId}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"customerId\": \"cus_123\",\n  \"users\": [\n    {\n      \"userId\": \"user_1\",\n      \"data\": {\n        \"email\": \"admin@example.com\",\n        \"name\": \"Jane Admin\",\n        \"billingAdmin\": true\n      }\n    }\n  ]\n}" },
+            "url": { "raw": "{{baseUrl}}/api/events/customer-update/set-users", "host": ["{{baseUrl}}"], "path": ["api", "events", "customer-update", "set-users"] },
+            "description": "Attaches one or more users to a customer and flags which are billing admins."
+          }
+        },
+        {
+          "name": "Set billing contacts for many customers",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "x-ck-api-key", "value": "{{apiKey}}" },
+              { "key": "x-ck-app", "value": "{{appId}}" }
+            ],
+            "body": { "mode": "raw", "raw": "[\n  {\n    \"customerId\": \"cus_123\",\n    \"users\": [\n      { \"userId\": \"user_1\", \"data\": { \"email\": \"admin@example.com\", \"name\": \"Jane Admin\", \"billingAdmin\": true } }\n    ]\n  }\n]" },
+            "url": { "raw": "{{baseUrl}}/api/events/customer-update/set-users/bulk", "host": ["{{baseUrl}}"], "path": ["api", "events", "customer-update", "set-users", "bulk"] },
+            "description": "Bulk variant of set-users."
+          }
+        }
+      ]
+    }
+  ]
+}

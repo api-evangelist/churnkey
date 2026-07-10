@@ -1,0 +1,164 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Churnkey API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": { "name": "Sessions (Data API)", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List Cancel Flow sessions.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.churnkey.co/v1/data/sessions",
+            "headers": [
+              { "name": "x-ck-api-key", "value": "{{apiKey}}" },
+              { "name": "x-ck-app", "value": "{{appId}}" }
+            ],
+            "params": [
+              { "name": "limit", "value": "100", "type": "query", "description": "Number of sessions (default 100, max 10000)." },
+              { "name": "startDate", "value": "", "type": "query", "description": "Filter on or after this date." },
+              { "name": "offerType", "value": "", "type": "query", "description": "PAUSE, DISCOUNT, CONTACT, PLAN_CHANGE, REDIRECT, TRIAL_EXTENSION." }
+            ]
+          },
+          "docs": "Returns an array of Cancel Flow sessions (max 10,000 per request) with rich filters."
+        },
+        {
+          "info": { "name": "Aggregate session data.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.churnkey.co/v1/data/session-aggregation",
+            "headers": [
+              { "name": "x-ck-api-key", "value": "{{apiKey}}" },
+              { "name": "x-ck-app", "value": "{{appId}}" }
+            ],
+            "params": [
+              { "name": "breakdown", "value": "month,offerType", "type": "query", "description": "Comma-separated grouping fields." }
+            ]
+          },
+          "docs": "Returns grouped session counts with optional breakdown fields."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Data Subject Requests (Data API)", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "GDPR access request.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.churnkey.co/v1/data/dsr/access",
+            "headers": [
+              { "name": "Content-Type", "value": "application/json" },
+              { "name": "x-ck-api-key", "value": "{{apiKey}}" },
+              { "name": "x-ck-app", "value": "{{appId}}" }
+            ],
+            "body": { "type": "json", "data": "{\n  \"email\": \"user@example.com\"\n}" }
+          },
+          "docs": "Retrieve all personal data Churnkey has stored for a user."
+        },
+        {
+          "info": { "name": "GDPR deletion request.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.churnkey.co/v1/data/dsr/delete",
+            "headers": [
+              { "name": "Content-Type", "value": "application/json" },
+              { "name": "x-ck-api-key", "value": "{{apiKey}}" },
+              { "name": "x-ck-app", "value": "{{appId}}" }
+            ],
+            "body": { "type": "json", "data": "{\n  \"email\": \"user@example.com\"\n}" }
+          },
+          "docs": "Delete the personal data Churnkey has stored for a user."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Events", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Create a customer event.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.churnkey.co/v1/api/events/new",
+            "headers": [
+              { "name": "Content-Type", "value": "application/json" },
+              { "name": "x-ck-api-key", "value": "{{apiKey}}" },
+              { "name": "x-ck-app", "value": "{{appId}}" }
+            ],
+            "body": { "type": "json", "data": "{\n  \"event\": \"upgraded_plan\",\n  \"customerId\": \"cus_123\",\n  \"eventData\": { \"plan\": \"pro\" }\n}" }
+          },
+          "docs": "Records a single customer event."
+        },
+        {
+          "info": { "name": "Create up to 100 events.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.churnkey.co/v1/api/events/bulk",
+            "headers": [
+              { "name": "Content-Type", "value": "application/json" },
+              { "name": "x-ck-api-key", "value": "{{apiKey}}" },
+              { "name": "x-ck-app", "value": "{{appId}}" }
+            ],
+            "body": { "type": "json", "data": "[\n  { \"event\": \"login\", \"customerId\": \"cus_123\" }\n]" }
+          },
+          "docs": "Records up to 100 customer events in a single request."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Customers", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Update customer or user data.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.churnkey.co/v1/api/events/customer-update",
+            "headers": [
+              { "name": "Content-Type", "value": "application/json" },
+              { "name": "x-ck-api-key", "value": "{{apiKey}}" },
+              { "name": "x-ck-app", "value": "{{appId}}" }
+            ],
+            "body": { "type": "json", "data": "{\n  \"customerId\": \"cus_123\",\n  \"customerData\": { \"company\": \"Acme\" }\n}" }
+          },
+          "docs": "Updates a customer's attributes used for segmentation and email merge tags."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Billing Contacts (Payment Recovery)", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Set billing contacts for a customer.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.churnkey.co/v1/api/events/customer-update/set-users",
+            "headers": [
+              { "name": "Content-Type", "value": "application/json" },
+              { "name": "x-ck-api-key", "value": "{{apiKey}}" },
+              { "name": "x-ck-app", "value": "{{appId}}" }
+            ],
+            "body": { "type": "json", "data": "{\n  \"customerId\": \"cus_123\",\n  \"users\": [\n    { \"userId\": \"user_1\", \"data\": { \"email\": \"admin@example.com\", \"name\": \"Jane Admin\", \"billingAdmin\": true } }\n  ]\n}" }
+          },
+          "docs": "Attaches one or more users to a customer and flags which are billing admins."
+        },
+        {
+          "info": { "name": "Set billing contacts for many customers.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.churnkey.co/v1/api/events/customer-update/set-users/bulk",
+            "headers": [
+              { "name": "Content-Type", "value": "application/json" },
+              { "name": "x-ck-api-key", "value": "{{apiKey}}" },
+              { "name": "x-ck-app", "value": "{{appId}}" }
+            ],
+            "body": { "type": "json", "data": "[\n  { \"customerId\": \"cus_123\", \"users\": [ { \"userId\": \"user_1\", \"data\": { \"email\": \"admin@example.com\", \"name\": \"Jane Admin\", \"billingAdmin\": true } } ] }\n]" }
+          },
+          "docs": "Bulk variant of set-users."
+        }
+      ]
+    }
+  ]
+}

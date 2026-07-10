@@ -1,0 +1,101 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Churnkey
+providerId: churnkey
+created: '2026-07-10'
+modified: '2026-07-10'
+reconciled: false
+tags:
+- Churn Prevention
+- Retention
+- Failed Payment Recovery
+- Subscriptions
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Churnkey spend. Churnkey is billed as a monthly SaaS
+  subscription scaled to a customer's churn volume (Starter publicly listed at
+  $250/month billed yearly; Core, Intelligence, and Enterprise custom-priced),
+  not as a metered per-API-call service. The APIs, webhooks, React SDK, and MCP
+  server carry no separate usage fee. The economic value case is retention:
+  saved subscriptions from Cancel Flows and recovered involuntary churn from
+  Failed Payment Recovery are weighed against the fixed subscription cost. Some
+  third-party analyses describe revenue-share-style pricing on recovered
+  revenue; that is not reflected on the reviewed pricing page and is left
+  unreconciled here.
+notes: >-
+  Per-tier prices above Starter are custom; verify current subscription cost and
+  any revenue-share terms with Churnkey. The dominant cost driver is the
+  subscription tier tied to churn volume, offset against saved and recovered
+  revenue, rather than API call volume.
+sources:
+- https://churnkey.co/pricing
+- https://churnkey.co/
+- https://docs.churnkey.co/
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Churnkey
+serviceCategory: Retention and Subscription Management
+billingModel:
+  pricingCategory: Subscription-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Purchase
+  - Usage
+  - Adjustment
+focusColumns:
+  ServiceName: Churnkey
+  ServiceCategory: Retention and Subscription Management
+  ProviderName: Churnkey
+  PublisherName: Churnkey
+  InvoiceIssuerName: Churnkey
+  BillingCurrency: USD
+  ChargeCategory: Purchase
+  PricingCategory: Subscription-Based
+meters:
+- name: subscription_tier
+  description: Monthly Churnkey subscription tier, scaled to the account's churn volume.
+  unit: months
+  aggregation: sum
+  dimensions:
+  - account
+  - plan
+- name: churn_volume
+  description: Monthly churn volume that determines the appropriate subscription tier.
+  unit: usd
+  aggregation: sum
+  dimensions:
+  - account
+- name: saved_revenue
+  description: Subscription revenue saved by Cancel Flow offers (pause, discount, plan change) - value recovered, not a charge.
+  unit: usd
+  aggregation: sum
+  dimensions:
+  - account
+  - offerType
+- name: recovered_revenue
+  description: Involuntary churn recovered by Failed Payment Recovery (dunning) - value recovered, not a charge.
+  unit: usd
+  aggregation: sum
+  dimensions:
+  - account
+principles:
+- name: Visibility
+  description: Track the monthly subscription cost against Cancel Flow saved revenue and dunning recovered revenue from the Data API sessions and metrics.
+- name: Allocation
+  description: Attribute saved and recovered revenue to plans, segments, and offer types to see where retention spend pays off.
+- name: Optimization
+  description: Tune Cancel Flow offers and retry logic to maximize save/recovery rate per subscription dollar; right-size the tier to actual churn volume.
+- name: Accountability
+  description: Assign an owner for retention outcomes; review saved/recovered revenue versus the subscription cost each billing cycle.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
