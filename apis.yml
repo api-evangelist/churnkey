@@ -152,6 +152,12 @@ apis:
     surfaced through the Event Tracking and Data APIs. Endpoints here are modeled,
     not confirmed from public reference documentation.
 common:
+- type: TrustCenter
+  url: security/churnkey-trust-center.yml
+- type: DomainSecurity
+  url: security/churnkey-domain-security.yml
+- type: Authentication
+  url: authentication/churnkey-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/churnkey
 - type: LinkedIn

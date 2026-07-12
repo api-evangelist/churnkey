@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: searched
+probe: true
+source: https://churnkey.co/security
+url: https://churnkey.co/security
+certifications:
+- SOC 2
+- GDPR
+evidence:
+- source: https://churnkey.co/security
+  keywords:
+  - soc 2
+  - soc2
+  - gdpr

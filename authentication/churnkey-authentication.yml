@@ -1,0 +1,24 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/churnkey-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: apiKeyAuth
+  type: apiKey
+  in: header
+  parameter: x-ck-api-key
+  description: Churnkey API key. The Data API (/v1/data) uses the Data API key from Settings
+    > Account; the event and billing-contact endpoints (/v1/api) use a Churnkey API key.
+  sources:
+  - openapi/churnkey-openapi.yml
+- name: appIdAuth
+  type: apiKey
+  in: header
+  parameter: x-ck-app
+  description: Churnkey Application ID (App ID) from Settings.
+  sources:
+  - openapi/churnkey-openapi.yml
