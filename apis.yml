@@ -152,6 +152,8 @@ apis:
     surfaced through the Event Tracking and Data APIs. Endpoints here are modeled,
     not confirmed from public reference documentation.
 common:
+- type: AgenticAccess
+  url: agentic-access/churnkey-agentic-access.yml
 - type: TrustCenter
   url: security/churnkey-trust-center.yml
 - type: DomainSecurity
