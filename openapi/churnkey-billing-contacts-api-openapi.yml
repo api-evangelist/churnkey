@@ -1,0 +1,140 @@
+openapi: 3.0.3
+info:
+  title: Churnkey Billing Contacts API
+  description: 'REST surface for Churnkey, retention and growth infrastructure for subscription companies. This document covers Churnkey''s server-to-server REST endpoints: the Data API (Cancel Flow sessions and aggregations, plus GDPR data-subject requests) under https://api.churnkey.co/v1/data, and the Event/Customer API (event tracking, customer updates, and billing-contact management for Failed Payment Recovery) under https://api.churnkey.co/v1/api. All requests are authenticated with an App ID header (x-ck-app) and an API key header. The Data API uses a Data API key (x-ck-api-key from Settings > Account); the event and billing-contact endpoints use a Churnkey API key. Churnkey''s personalized Cancel Flows are delivered client-side via a JavaScript SDK authorized with a server-computed HMAC-SHA256 authHash and are not modeled as REST paths here. Endpoint paths and parameters below reflect Churnkey''s public documentation as of the review date; request and response schemas are honestly modeled where the docs do not publish a full schema.'
+  version: '1.0'
+  contact:
+    name: Churnkey
+    url: https://churnkey.co
+servers:
+- url: https://api.churnkey.co/v1
+  description: Churnkey production API
+security:
+- apiKeyAuth: []
+  appIdAuth: []
+tags:
+- name: Billing Contacts
+  description: Billing-contact management for Failed Payment Recovery.
+paths:
+  /api/events/customer-update/set-users:
+    post:
+      operationId: setBillingUsers
+      tags:
+      - Billing Contacts
+      summary: Set billing contacts for a customer
+      description: Attaches one or more users to a customer and flags which are billing admins. Billing admins receive Failed Payment Recovery (dunning) communications.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetUsersInput'
+      responses:
+        '200':
+          description: The billing contacts were set.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/events/customer-update/set-users/bulk:
+    post:
+      operationId: setBillingUsersBulk
+      tags:
+      - Billing Contacts
+      summary: Set billing contacts for many customers
+      description: Bulk variant of set-users - each array item uses the same structure as the single update.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/SetUsersInput'
+      responses:
+        '200':
+          description: The billing contacts were set.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    SetUsersInput:
+      type: object
+      required:
+      - customerId
+      - users
+      properties:
+        customerId:
+          type: string
+          description: Payment-provider customer ID (for example a Stripe customer ID).
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingUser'
+    BillingUser:
+      type: object
+      required:
+      - userId
+      - data
+      properties:
+        userId:
+          type: string
+          description: Internal user identifier.
+        data:
+          type: object
+          required:
+          - email
+          - name
+          - billingAdmin
+          properties:
+            email:
+              type: string
+              format: email
+            name:
+              type: string
+            phone:
+              type: string
+            billingAdmin:
+              type: boolean
+              description: When true, this user receives Payment Recovery emails.
+          additionalProperties: true
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key / App ID headers.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-ck-api-key
+      description: Churnkey API key. The Data API (/v1/data) uses the Data API key from Settings > Account; the event and billing-contact endpoints (/v1/api) use a Churnkey API key.
+    appIdAuth:
+      type: apiKey
+      in: header
+      name: x-ck-app
+      description: Churnkey Application ID (App ID) from Settings.

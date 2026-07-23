@@ -1,0 +1,95 @@
+openapi: 3.0.3
+info:
+  title: Churnkey Billing Contacts Customers API
+  description: 'REST surface for Churnkey, retention and growth infrastructure for subscription companies. This document covers Churnkey''s server-to-server REST endpoints: the Data API (Cancel Flow sessions and aggregations, plus GDPR data-subject requests) under https://api.churnkey.co/v1/data, and the Event/Customer API (event tracking, customer updates, and billing-contact management for Failed Payment Recovery) under https://api.churnkey.co/v1/api. All requests are authenticated with an App ID header (x-ck-app) and an API key header. The Data API uses a Data API key (x-ck-api-key from Settings > Account); the event and billing-contact endpoints use a Churnkey API key. Churnkey''s personalized Cancel Flows are delivered client-side via a JavaScript SDK authorized with a server-computed HMAC-SHA256 authHash and are not modeled as REST paths here. Endpoint paths and parameters below reflect Churnkey''s public documentation as of the review date; request and response schemas are honestly modeled where the docs do not publish a full schema.'
+  version: '1.0'
+  contact:
+    name: Churnkey
+    url: https://churnkey.co
+servers:
+- url: https://api.churnkey.co/v1
+  description: Churnkey production API
+security:
+- apiKeyAuth: []
+  appIdAuth: []
+tags:
+- name: Customers
+  description: Customer and B2B user attribute updates.
+paths:
+  /api/events/customer-update:
+    post:
+      operationId: updateCustomer
+      tags:
+      - Customers
+      summary: Update customer or user data
+      description: Updates a customer's attributes (and optional B2B user data) used for segmentation and email merge tags. At least one of uid or customerId is required.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerUpdate'
+      responses:
+        '200':
+          description: The customer was updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    B2BUser:
+      type: object
+      properties:
+        uid:
+          type: string
+        data:
+          type: object
+          additionalProperties: true
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+    CustomerUpdate:
+      type: object
+      description: At least one of uid or customerId is required.
+      properties:
+        uid:
+          type: string
+        customerId:
+          type: string
+        customerData:
+          type: object
+          additionalProperties: true
+          description: Customer attributes used for segmentation and merge tags.
+        user:
+          $ref: '#/components/schemas/B2BUser'
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key / App ID headers.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-ck-api-key
+      description: Churnkey API key. The Data API (/v1/data) uses the Data API key from Settings > Account; the event and billing-contact endpoints (/v1/api) use a Churnkey API key.
+    appIdAuth:
+      type: apiKey
+      in: header
+      name: x-ck-app
+      description: Churnkey Application ID (App ID) from Settings.

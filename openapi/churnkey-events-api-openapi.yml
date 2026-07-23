@@ -1,0 +1,133 @@
+openapi: 3.0.3
+info:
+  title: Churnkey Billing Contacts Events API
+  description: 'REST surface for Churnkey, retention and growth infrastructure for subscription companies. This document covers Churnkey''s server-to-server REST endpoints: the Data API (Cancel Flow sessions and aggregations, plus GDPR data-subject requests) under https://api.churnkey.co/v1/data, and the Event/Customer API (event tracking, customer updates, and billing-contact management for Failed Payment Recovery) under https://api.churnkey.co/v1/api. All requests are authenticated with an App ID header (x-ck-app) and an API key header. The Data API uses a Data API key (x-ck-api-key from Settings > Account); the event and billing-contact endpoints use a Churnkey API key. Churnkey''s personalized Cancel Flows are delivered client-side via a JavaScript SDK authorized with a server-computed HMAC-SHA256 authHash and are not modeled as REST paths here. Endpoint paths and parameters below reflect Churnkey''s public documentation as of the review date; request and response schemas are honestly modeled where the docs do not publish a full schema.'
+  version: '1.0'
+  contact:
+    name: Churnkey
+    url: https://churnkey.co
+servers:
+- url: https://api.churnkey.co/v1
+  description: Churnkey production API
+security:
+- apiKeyAuth: []
+  appIdAuth: []
+tags:
+- name: Events
+  description: Customer event tracking and passive data enrichment.
+paths:
+  /api/events/new:
+    post:
+      operationId: createEvent
+      tags:
+      - Events
+      summary: Create a customer event
+      description: Records a single customer event for segmentation, targeting, and passive data collection.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventInput'
+      responses:
+        '200':
+          description: The event was recorded.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/events/bulk:
+    post:
+      operationId: createEventsBulk
+      tags:
+      - Events
+      summary: Create up to 100 events
+      description: Records up to 100 customer events in a single request.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              maxItems: 100
+              items:
+                $ref: '#/components/schemas/EventInput'
+      responses:
+        '200':
+          description: The events were recorded.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    B2BUser:
+      type: object
+      properties:
+        uid:
+          type: string
+        data:
+          type: object
+          additionalProperties: true
+    EventInput:
+      type: object
+      required:
+      - event
+      properties:
+        event:
+          type: string
+          description: Event name.
+        customerId:
+          type: string
+          description: Customer identifier (customerId or uid is required).
+        uid:
+          type: string
+          description: Unique customer ID from your database.
+        eventDate:
+          type: string
+          format: date-time
+          description: ISO date for backfilling historical events.
+        eventData:
+          type: object
+          additionalProperties: true
+          description: Key-value event details.
+        user:
+          $ref: '#/components/schemas/B2BUser'
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key / App ID headers.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-ck-api-key
+      description: Churnkey API key. The Data API (/v1/data) uses the Data API key from Settings > Account; the event and billing-contact endpoints (/v1/api) use a Churnkey API key.
+    appIdAuth:
+      type: apiKey
+      in: header
+      name: x-ck-app
+      description: Churnkey Application ID (App ID) from Settings.

@@ -1,0 +1,257 @@
+openapi: 3.0.3
+info:
+  title: Churnkey Billing Contacts Sessions API
+  description: 'REST surface for Churnkey, retention and growth infrastructure for subscription companies. This document covers Churnkey''s server-to-server REST endpoints: the Data API (Cancel Flow sessions and aggregations, plus GDPR data-subject requests) under https://api.churnkey.co/v1/data, and the Event/Customer API (event tracking, customer updates, and billing-contact management for Failed Payment Recovery) under https://api.churnkey.co/v1/api. All requests are authenticated with an App ID header (x-ck-app) and an API key header. The Data API uses a Data API key (x-ck-api-key from Settings > Account); the event and billing-contact endpoints use a Churnkey API key. Churnkey''s personalized Cancel Flows are delivered client-side via a JavaScript SDK authorized with a server-computed HMAC-SHA256 authHash and are not modeled as REST paths here. Endpoint paths and parameters below reflect Churnkey''s public documentation as of the review date; request and response schemas are honestly modeled where the docs do not publish a full schema.'
+  version: '1.0'
+  contact:
+    name: Churnkey
+    url: https://churnkey.co
+servers:
+- url: https://api.churnkey.co/v1
+  description: Churnkey production API
+security:
+- apiKeyAuth: []
+  appIdAuth: []
+tags:
+- name: Sessions
+  description: Cancel Flow session data and aggregations (Data API).
+paths:
+  /data/sessions:
+    get:
+      operationId: listSessions
+      tags:
+      - Sessions
+      summary: List Cancel Flow sessions
+      description: Returns an array of Cancel Flow sessions (maximum 10,000 per request), filterable by customer, plan, blueprint, A/B test, offer type, save type, coupon, billing interval, and date range.
+      parameters:
+      - name: limit
+        in: query
+        description: Number of sessions to return (default 100, max 10000).
+        schema:
+          type: integer
+          default: 100
+          maximum: 10000
+      - name: skip
+        in: query
+        description: Pagination offset.
+        schema:
+          type: integer
+      - name: startDate
+        in: query
+        description: Filter sessions on or after this date.
+        schema:
+          type: string
+          format: date
+      - name: endDate
+        in: query
+        description: Filter sessions on or before this date.
+        schema:
+          type: string
+          format: date
+      - name: customerId
+        in: query
+        schema:
+          type: string
+      - name: planId
+        in: query
+        schema:
+          type: string
+      - name: blueprintId
+        in: query
+        schema:
+          type: string
+      - name: abtest
+        in: query
+        schema:
+          type: string
+      - name: trial
+        in: query
+        schema:
+          type: boolean
+      - name: canceled
+        in: query
+        schema:
+          type: boolean
+      - name: aborted
+        in: query
+        schema:
+          type: boolean
+      - name: bounced
+        in: query
+        schema:
+          type: boolean
+      - name: billingInterval
+        in: query
+        schema:
+          type: string
+          enum:
+          - WEEK
+          - MONTH
+          - YEAR
+      - name: offerType
+        in: query
+        schema:
+          type: string
+          enum:
+          - PAUSE
+          - DISCOUNT
+          - CONTACT
+          - PLAN_CHANGE
+          - REDIRECT
+          - TRIAL_EXTENSION
+      - name: saveType
+        in: query
+        schema:
+          type: string
+          enum:
+          - PAUSE
+          - DISCOUNT
+          - CONTACT
+          - PLAN_CHANGE
+          - REDIRECT
+          - TRIAL_EXTENSION
+          - ABANDON
+      - name: couponId
+        in: query
+        schema:
+          type: string
+      - name: pauseDuration
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: An array of sessions.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Session'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /data/session-aggregation:
+    get:
+      operationId: getSessionAggregation
+      tags:
+      - Sessions
+      summary: Aggregate session data
+      description: Returns grouped session counts with optional breakdown fields (for example month, planId, offerType, saveType, couponId, billingInterval, blueprintId, abtest). Accepts the same filters as List Sessions.
+      parameters:
+      - name: breakdown
+        in: query
+        description: Comma-separated grouping fields - any of month, trial, billingInterval, planId, aborted, canceled, offerType, saveType, couponId, pauseDuration, blueprintId, abtest.
+        schema:
+          type: string
+      - name: startDate
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: endDate
+        in: query
+        schema:
+          type: string
+          format: date
+      responses:
+        '200':
+          description: Grouped session counts.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SessionAggregate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    SessionAggregate:
+      type: object
+      description: A grouped session count keyed by the requested breakdown fields.
+      properties:
+        count:
+          type: integer
+      additionalProperties: true
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+    Session:
+      type: object
+      description: A Cancel Flow session. Fields below are modeled from the documented filters and webhook payloads; the full response schema is not published.
+      properties:
+        id:
+          type: string
+        customerId:
+          type: string
+        planId:
+          type: string
+        blueprintId:
+          type: string
+        billingInterval:
+          type: string
+          enum:
+          - WEEK
+          - MONTH
+          - YEAR
+        trial:
+          type: boolean
+        canceled:
+          type: boolean
+        aborted:
+          type: boolean
+        offerType:
+          type: string
+          enum:
+          - PAUSE
+          - DISCOUNT
+          - CONTACT
+          - PLAN_CHANGE
+          - REDIRECT
+          - TRIAL_EXTENSION
+        saveType:
+          type: string
+          enum:
+          - PAUSE
+          - DISCOUNT
+          - CONTACT
+          - PLAN_CHANGE
+          - REDIRECT
+          - TRIAL_EXTENSION
+          - ABANDON
+        couponId:
+          type: string
+        pauseDuration:
+          type: integer
+        surveyResponse:
+          type: string
+        feedback:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key / App ID headers.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-ck-api-key
+      description: Churnkey API key. The Data API (/v1/data) uses the Data API key from Settings > Account; the event and billing-contact endpoints (/v1/api) use a Churnkey API key.
+    appIdAuth:
+      type: apiKey
+      in: header
+      name: x-ck-app
+      description: Churnkey Application ID (App ID) from Settings.

@@ -1,0 +1,104 @@
+openapi: 3.0.3
+info:
+  title: Churnkey Billing Contacts Data Subject Requests API
+  description: 'REST surface for Churnkey, retention and growth infrastructure for subscription companies. This document covers Churnkey''s server-to-server REST endpoints: the Data API (Cancel Flow sessions and aggregations, plus GDPR data-subject requests) under https://api.churnkey.co/v1/data, and the Event/Customer API (event tracking, customer updates, and billing-contact management for Failed Payment Recovery) under https://api.churnkey.co/v1/api. All requests are authenticated with an App ID header (x-ck-app) and an API key header. The Data API uses a Data API key (x-ck-api-key from Settings > Account); the event and billing-contact endpoints use a Churnkey API key. Churnkey''s personalized Cancel Flows are delivered client-side via a JavaScript SDK authorized with a server-computed HMAC-SHA256 authHash and are not modeled as REST paths here. Endpoint paths and parameters below reflect Churnkey''s public documentation as of the review date; request and response schemas are honestly modeled where the docs do not publish a full schema.'
+  version: '1.0'
+  contact:
+    name: Churnkey
+    url: https://churnkey.co
+servers:
+- url: https://api.churnkey.co/v1
+  description: Churnkey production API
+security:
+- apiKeyAuth: []
+  appIdAuth: []
+tags:
+- name: Data Subject Requests
+  description: GDPR access and deletion requests (Data API).
+paths:
+  /data/dsr/access:
+    post:
+      operationId: dsrAccess
+      tags:
+      - Data Subject Requests
+      summary: GDPR data-subject access request
+      description: Retrieve all personal data Churnkey has stored for a user, identified by email.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DsrRequest'
+      responses:
+        '200':
+          description: The stored personal data for the user.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /data/dsr/delete:
+    post:
+      operationId: dsrDelete
+      tags:
+      - Data Subject Requests
+      summary: GDPR data-subject deletion request
+      description: Delete the personal data Churnkey has stored for a user, identified by email. May be rejected if the data volume exceeds allowed limits.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DsrRequest'
+      responses:
+        '200':
+          description: Deletion result.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    DsrRequest:
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          format: email
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key / App ID headers.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-ck-api-key
+      description: Churnkey API key. The Data API (/v1/data) uses the Data API key from Settings > Account; the event and billing-contact endpoints (/v1/api) use a Churnkey API key.
+    appIdAuth:
+      type: apiKey
+      in: header
+      name: x-ck-app
+      description: Churnkey Application ID (App ID) from Settings.
