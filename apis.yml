@@ -11,7 +11,20 @@ description: Churnkey is retention and growth infrastructure for subscription
   session/analytics data, event tracking, customer updates, billing-contact
   management, and GDPR data-subject requests, plus signed webhooks. It integrates
   with Stripe, Chargebee, Paddle, Braintree, and Maxio.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/churnkey.png
 tags:
 - Churn Prevention
 - Retention
@@ -25,94 +38,6 @@ created: '2026-07-10'
 modified: '2026-07-10'
 specificationVersion: '0.19'
 apis:
-- aid: churnkey:churnkey-data-api
-  name: Churnkey Data API
-  tags:
-  - Sessions
-  - Cancel Flows
-  - Analytics
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.churnkey.co/data-api
-  baseURL: https://api.churnkey.co/v1/data
-  properties:
-  - url: https://docs.churnkey.co/data-api
-    type: Documentation
-  - url: openapi/churnkey-openapi.yml
-    type: OpenAPI
-  - url: collections/churnkey.postman_collection.json
-    type: PostmanCollection
-  - url: collections/churnkey.opencollection.json
-    type: OpenCollection
-  description: Query Cancel Flow session data programmatically. List sessions with
-    rich filters (customer, plan, blueprint, A/B test, offer type, save type,
-    coupon, date range) and retrieve grouped/aggregated session counts by month,
-    plan, offer type, and more. Authenticated with a Data API key and App ID
-    headers, distinct from the Cancel Flow API key.
-- aid: churnkey:churnkey-event-tracking-api
-  name: Churnkey Event Tracking API
-  tags:
-  - Events
-  - Customers
-  - Tracking
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.churnkey.co/data-integrations/event-tracking/
-  baseURL: https://api.churnkey.co/v1/api
-  properties:
-  - url: https://docs.churnkey.co/data-integrations/event-tracking/
-    type: Documentation
-  - url: openapi/churnkey-openapi.yml
-    type: OpenAPI
-  - url: collections/churnkey.postman_collection.json
-    type: PostmanCollection
-  - url: collections/churnkey.opencollection.json
-    type: OpenCollection
-  description: Send customer events into Churnkey to enrich segmentation, targeting,
-    and passive data collection. Create single events, bulk events (up to 100 per
-    request), and update customer or B2B user attributes used as email merge tags
-    and segmentation inputs.
-- aid: churnkey:churnkey-billing-contact-api
-  name: Churnkey Billing Contact API
-  tags:
-  - Payment Recovery
-  - Dunning
-  - Billing Contacts
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.churnkey.co/failed-payment-recovery/billing-contact-api/
-  baseURL: https://api.churnkey.co/v1/api
-  properties:
-  - url: https://docs.churnkey.co/failed-payment-recovery/billing-contact-api/
-    type: Documentation
-  - url: openapi/churnkey-openapi.yml
-    type: OpenAPI
-  - url: collections/churnkey.postman_collection.json
-    type: PostmanCollection
-  - url: collections/churnkey.opencollection.json
-    type: OpenCollection
-  description: Configure the billing contacts that receive Failed Payment Recovery
-    (dunning) communications. Attach one or more users to a customer and flag which
-    are billing admins, improving recovery rates for team accounts and organizations
-    with multiple administrators. Supports single and bulk updates.
-- aid: churnkey:churnkey-data-subject-requests-api
-  name: Churnkey Data Subject Requests API
-  tags:
-  - GDPR
-  - Privacy
-  - Compliance
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.churnkey.co/data-api
-  baseURL: https://api.churnkey.co/v1/data
-  properties:
-  - url: https://docs.churnkey.co/data-api
-    type: Documentation
-  - url: openapi/churnkey-openapi.yml
-    type: OpenAPI
-  - url: collections/churnkey.postman_collection.json
-    type: PostmanCollection
-  - url: collections/churnkey.opencollection.json
-    type: OpenCollection
-  description: GDPR data-subject request endpoints for retrieving or deleting all
-    personal data Churnkey has stored for a user, identified by email. Supports
-    privacy access and erasure workflows.
 - aid: churnkey:churnkey-cancel-flow-embed
   name: Churnkey Cancel Flow Embed
   tags:
@@ -127,12 +52,11 @@ apis:
     type: Documentation
   - url: https://docs.churnkey.co/integrations/general/
     type: Documentation
-  description: Client-side embed surface for personalized Cancel Flows. The
-    JavaScript SDK is initialized with window.churnkey.init(), passing an appId,
-    customerId, subscriptionId, provider, and a server-computed HMAC-SHA256
-    authHash (the customer ID signed with the Cancel Flow API key) so the hosted
-    flow can be trusted. This is a client SDK plus HMAC authorization surface
-    rather than a REST resource API.
+  description: >-
+    Client-side embed surface for personalized Cancel Flows. The JavaScript SDK is initialized with window.churnkey.init(),
+    passing an appId, customerId, subscriptionId, provider, and a server-computed HMAC-SHA256 authHash
+    (the customer ID signed with the Cancel Flow API key) so the hosted flow can be trusted. This is a
+    client SDK plus HMAC authorization surface rather than a REST resource API.
 - aid: churnkey:churnkey-reactivation-api
   name: Churnkey Reactivation API
   tags:
@@ -145,12 +69,112 @@ apis:
   properties:
   - url: https://churnkey.co/feature/reactivations
     type: Documentation
-  description: Reactivation (win-back) campaigns that re-engage churned or paused
-    customers with targeted offers. Reactivations are a documented Churnkey product,
-    but a dedicated public REST endpoint set is not published; campaigns are
-    configured in the Churnkey dashboard and driven by the same customer/event data
-    surfaced through the Event Tracking and Data APIs. Endpoints here are modeled,
-    not confirmed from public reference documentation.
+  description: >-
+    Reactivation (win-back) campaigns that re-engage churned or paused customers with targeted offers.
+    Reactivations are a documented Churnkey product, but a dedicated public REST endpoint set is not published;
+    campaigns are configured in the Churnkey dashboard and driven by the same customer/event data surfaced
+    through the Event Tracking and Data APIs. Endpoints here are modeled, not confirmed from public reference
+    documentation.
+- aid: churnkey:churnkey-billing-contacts-api
+  name: Churnkey Billing Contacts API
+  description: Billing-contact management for Failed Payment Recovery.
+  humanURL: https://docs.churnkey.co/data-api
+  baseURL: https://api.churnkey.co/v1/data
+  tags:
+  - Billing Contacts
+  properties:
+  - type: OpenAPI
+    url: openapi/churnkey-billing-contacts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.churnkey.co/data-api
+  - type: PostmanCollection
+    url: collections/churnkey.postman_collection.json
+  - type: OpenCollection
+    url: collections/churnkey.opencollection.json
+  - type: Documentation
+    url: https://docs.churnkey.co/data-integrations/event-tracking/
+  - type: Documentation
+    url: https://docs.churnkey.co/failed-payment-recovery/billing-contact-api/
+- aid: churnkey:churnkey-customers-api
+  name: Churnkey Customers API
+  description: Customer and B2B user attribute updates.
+  humanURL: https://docs.churnkey.co/data-api
+  baseURL: https://api.churnkey.co/v1/data
+  tags:
+  - Customers
+  properties:
+  - type: OpenAPI
+    url: openapi/churnkey-customers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.churnkey.co/data-api
+  - type: PostmanCollection
+    url: collections/churnkey.postman_collection.json
+  - type: OpenCollection
+    url: collections/churnkey.opencollection.json
+  - type: Documentation
+    url: https://docs.churnkey.co/data-integrations/event-tracking/
+  - type: Documentation
+    url: https://docs.churnkey.co/failed-payment-recovery/billing-contact-api/
+- aid: churnkey:churnkey-data-subject-requests-api
+  name: Churnkey Data Subject Requests API
+  description: GDPR access and deletion requests (Data API).
+  humanURL: https://docs.churnkey.co/data-api
+  baseURL: https://api.churnkey.co/v1/data
+  tags:
+  - Data Subject Requests
+  properties:
+  - type: OpenAPI
+    url: openapi/churnkey-data-subject-requests-api-openapi.yml
+  - type: Documentation
+    url: https://docs.churnkey.co/data-api
+  - type: PostmanCollection
+    url: collections/churnkey.postman_collection.json
+  - type: OpenCollection
+    url: collections/churnkey.opencollection.json
+  - type: Documentation
+    url: https://docs.churnkey.co/data-integrations/event-tracking/
+  - type: Documentation
+    url: https://docs.churnkey.co/failed-payment-recovery/billing-contact-api/
+- aid: churnkey:churnkey-events-api
+  name: Churnkey Events API
+  description: Customer event tracking and passive data enrichment.
+  humanURL: https://docs.churnkey.co/data-api
+  baseURL: https://api.churnkey.co/v1/data
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/churnkey-events-api-openapi.yml
+  - type: Documentation
+    url: https://docs.churnkey.co/data-api
+  - type: PostmanCollection
+    url: collections/churnkey.postman_collection.json
+  - type: OpenCollection
+    url: collections/churnkey.opencollection.json
+  - type: Documentation
+    url: https://docs.churnkey.co/data-integrations/event-tracking/
+  - type: Documentation
+    url: https://docs.churnkey.co/failed-payment-recovery/billing-contact-api/
+- aid: churnkey:churnkey-sessions-api
+  name: Churnkey Sessions API
+  description: Cancel Flow session data and aggregations (Data API).
+  humanURL: https://docs.churnkey.co/data-api
+  baseURL: https://api.churnkey.co/v1/data
+  tags:
+  - Sessions
+  properties:
+  - type: OpenAPI
+    url: openapi/churnkey-sessions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.churnkey.co/data-api
+  - type: PostmanCollection
+    url: collections/churnkey.postman_collection.json
+  - type: OpenCollection
+    url: collections/churnkey.opencollection.json
+  - type: Documentation
+    url: https://docs.churnkey.co/data-integrations/event-tracking/
+  - type: Documentation
+    url: https://docs.churnkey.co/failed-payment-recovery/billing-contact-api/
 common:
 - type: AgenticAccess
   url: agentic-access/churnkey-agentic-access.yml
