@@ -1,0 +1,22 @@
+{
+  "provider": "churnkey",
+  "sources": [
+    "churnkey-billing-contacts-api-openapi.yml",
+    "churnkey-customers-api-openapi.yml",
+    "churnkey-data-subject-requests-api-openapi.yml",
+    "churnkey-events-api-openapi.yml",
+    "churnkey-sessions-api-openapi.yml"
+  ],
+  "outputs": [
+    "churnkey-billing-contacts-api-openapi.yml",
+    "churnkey-customers-api-openapi.yml",
+    "churnkey-data-subject-requests-api-openapi.yml",
+    "churnkey-events-api-openapi.yml",
+    "churnkey-sessions-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

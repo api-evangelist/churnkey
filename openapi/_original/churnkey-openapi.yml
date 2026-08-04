@@ -1,0 +1,575 @@
+openapi: 3.0.3
+info:
+  title: Churnkey API
+  description: >-
+    REST surface for Churnkey, retention and growth infrastructure for
+    subscription companies. This document covers Churnkey's server-to-server
+    REST endpoints: the Data API (Cancel Flow sessions and aggregations, plus
+    GDPR data-subject requests) under https://api.churnkey.co/v1/data, and the
+    Event/Customer API (event tracking, customer updates, and billing-contact
+    management for Failed Payment Recovery) under https://api.churnkey.co/v1/api.
+    All requests are authenticated with an App ID header (x-ck-app) and an API
+    key header. The Data API uses a Data API key (x-ck-api-key from Settings >
+    Account); the event and billing-contact endpoints use a Churnkey API key.
+    Churnkey's personalized Cancel Flows are delivered client-side via a
+    JavaScript SDK authorized with a server-computed HMAC-SHA256 authHash and are
+    not modeled as REST paths here. Endpoint paths and parameters below reflect
+    Churnkey's public documentation as of the review date; request and response
+    schemas are honestly modeled where the docs do not publish a full schema.
+  version: '1.0'
+  contact:
+    name: Churnkey
+    url: https://churnkey.co
+servers:
+  - url: https://api.churnkey.co/v1
+    description: Churnkey production API
+security:
+  - apiKeyAuth: []
+    appIdAuth: []
+tags:
+  - name: Sessions
+    description: Cancel Flow session data and aggregations (Data API).
+  - name: Data Subject Requests
+    description: GDPR access and deletion requests (Data API).
+  - name: Events
+    description: Customer event tracking and passive data enrichment.
+  - name: Customers
+    description: Customer and B2B user attribute updates.
+  - name: Billing Contacts
+    description: Billing-contact management for Failed Payment Recovery.
+paths:
+  /data/sessions:
+    get:
+      operationId: listSessions
+      tags:
+        - Sessions
+      summary: List Cancel Flow sessions
+      description: >-
+        Returns an array of Cancel Flow sessions (maximum 10,000 per request),
+        filterable by customer, plan, blueprint, A/B test, offer type, save
+        type, coupon, billing interval, and date range.
+      parameters:
+        - name: limit
+          in: query
+          description: Number of sessions to return (default 100, max 10000).
+          schema:
+            type: integer
+            default: 100
+            maximum: 10000
+        - name: skip
+          in: query
+          description: Pagination offset.
+          schema:
+            type: integer
+        - name: startDate
+          in: query
+          description: Filter sessions on or after this date.
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          description: Filter sessions on or before this date.
+          schema:
+            type: string
+            format: date
+        - name: customerId
+          in: query
+          schema:
+            type: string
+        - name: planId
+          in: query
+          schema:
+            type: string
+        - name: blueprintId
+          in: query
+          schema:
+            type: string
+        - name: abtest
+          in: query
+          schema:
+            type: string
+        - name: trial
+          in: query
+          schema:
+            type: boolean
+        - name: canceled
+          in: query
+          schema:
+            type: boolean
+        - name: aborted
+          in: query
+          schema:
+            type: boolean
+        - name: bounced
+          in: query
+          schema:
+            type: boolean
+        - name: billingInterval
+          in: query
+          schema:
+            type: string
+            enum:
+              - WEEK
+              - MONTH
+              - YEAR
+        - name: offerType
+          in: query
+          schema:
+            type: string
+            enum:
+              - PAUSE
+              - DISCOUNT
+              - CONTACT
+              - PLAN_CHANGE
+              - REDIRECT
+              - TRIAL_EXTENSION
+        - name: saveType
+          in: query
+          schema:
+            type: string
+            enum:
+              - PAUSE
+              - DISCOUNT
+              - CONTACT
+              - PLAN_CHANGE
+              - REDIRECT
+              - TRIAL_EXTENSION
+              - ABANDON
+        - name: couponId
+          in: query
+          schema:
+            type: string
+        - name: pauseDuration
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: An array of sessions.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Session'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /data/session-aggregation:
+    get:
+      operationId: getSessionAggregation
+      tags:
+        - Sessions
+      summary: Aggregate session data
+      description: >-
+        Returns grouped session counts with optional breakdown fields (for
+        example month, planId, offerType, saveType, couponId, billingInterval,
+        blueprintId, abtest). Accepts the same filters as List Sessions.
+      parameters:
+        - name: breakdown
+          in: query
+          description: >-
+            Comma-separated grouping fields - any of month, trial,
+            billingInterval, planId, aborted, canceled, offerType, saveType,
+            couponId, pauseDuration, blueprintId, abtest.
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Grouped session counts.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SessionAggregate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /data/dsr/access:
+    post:
+      operationId: dsrAccess
+      tags:
+        - Data Subject Requests
+      summary: GDPR data-subject access request
+      description: Retrieve all personal data Churnkey has stored for a user, identified by email.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DsrRequest'
+      responses:
+        '200':
+          description: The stored personal data for the user.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /data/dsr/delete:
+    post:
+      operationId: dsrDelete
+      tags:
+        - Data Subject Requests
+      summary: GDPR data-subject deletion request
+      description: >-
+        Delete the personal data Churnkey has stored for a user, identified by
+        email. May be rejected if the data volume exceeds allowed limits.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DsrRequest'
+      responses:
+        '200':
+          description: Deletion result.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/events/new:
+    post:
+      operationId: createEvent
+      tags:
+        - Events
+      summary: Create a customer event
+      description: >-
+        Records a single customer event for segmentation, targeting, and passive
+        data collection.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventInput'
+      responses:
+        '200':
+          description: The event was recorded.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/events/bulk:
+    post:
+      operationId: createEventsBulk
+      tags:
+        - Events
+      summary: Create up to 100 events
+      description: Records up to 100 customer events in a single request.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              maxItems: 100
+              items:
+                $ref: '#/components/schemas/EventInput'
+      responses:
+        '200':
+          description: The events were recorded.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/events/customer-update:
+    post:
+      operationId: updateCustomer
+      tags:
+        - Customers
+      summary: Update customer or user data
+      description: >-
+        Updates a customer's attributes (and optional B2B user data) used for
+        segmentation and email merge tags. At least one of uid or customerId is
+        required.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerUpdate'
+      responses:
+        '200':
+          description: The customer was updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/events/customer-update/set-users:
+    post:
+      operationId: setBillingUsers
+      tags:
+        - Billing Contacts
+      summary: Set billing contacts for a customer
+      description: >-
+        Attaches one or more users to a customer and flags which are billing
+        admins. Billing admins receive Failed Payment Recovery (dunning)
+        communications.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetUsersInput'
+      responses:
+        '200':
+          description: The billing contacts were set.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/events/customer-update/set-users/bulk:
+    post:
+      operationId: setBillingUsersBulk
+      tags:
+        - Billing Contacts
+      summary: Set billing contacts for many customers
+      description: Bulk variant of set-users - each array item uses the same structure as the single update.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/SetUsersInput'
+      responses:
+        '200':
+          description: The billing contacts were set.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-ck-api-key
+      description: >-
+        Churnkey API key. The Data API (/v1/data) uses the Data API key from
+        Settings > Account; the event and billing-contact endpoints (/v1/api)
+        use a Churnkey API key.
+    appIdAuth:
+      type: apiKey
+      in: header
+      name: x-ck-app
+      description: Churnkey Application ID (App ID) from Settings.
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key / App ID headers.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+    Session:
+      type: object
+      description: >-
+        A Cancel Flow session. Fields below are modeled from the documented
+        filters and webhook payloads; the full response schema is not published.
+      properties:
+        id:
+          type: string
+        customerId:
+          type: string
+        planId:
+          type: string
+        blueprintId:
+          type: string
+        billingInterval:
+          type: string
+          enum:
+            - WEEK
+            - MONTH
+            - YEAR
+        trial:
+          type: boolean
+        canceled:
+          type: boolean
+        aborted:
+          type: boolean
+        offerType:
+          type: string
+          enum:
+            - PAUSE
+            - DISCOUNT
+            - CONTACT
+            - PLAN_CHANGE
+            - REDIRECT
+            - TRIAL_EXTENSION
+        saveType:
+          type: string
+          enum:
+            - PAUSE
+            - DISCOUNT
+            - CONTACT
+            - PLAN_CHANGE
+            - REDIRECT
+            - TRIAL_EXTENSION
+            - ABANDON
+        couponId:
+          type: string
+        pauseDuration:
+          type: integer
+        surveyResponse:
+          type: string
+        feedback:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    SessionAggregate:
+      type: object
+      description: A grouped session count keyed by the requested breakdown fields.
+      properties:
+        count:
+          type: integer
+      additionalProperties: true
+    DsrRequest:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          format: email
+    EventInput:
+      type: object
+      required:
+        - event
+      properties:
+        event:
+          type: string
+          description: Event name.
+        customerId:
+          type: string
+          description: Customer identifier (customerId or uid is required).
+        uid:
+          type: string
+          description: Unique customer ID from your database.
+        eventDate:
+          type: string
+          format: date-time
+          description: ISO date for backfilling historical events.
+        eventData:
+          type: object
+          additionalProperties: true
+          description: Key-value event details.
+        user:
+          $ref: '#/components/schemas/B2BUser'
+    CustomerUpdate:
+      type: object
+      description: At least one of uid or customerId is required.
+      properties:
+        uid:
+          type: string
+        customerId:
+          type: string
+        customerData:
+          type: object
+          additionalProperties: true
+          description: Customer attributes used for segmentation and merge tags.
+        user:
+          $ref: '#/components/schemas/B2BUser'
+    B2BUser:
+      type: object
+      properties:
+        uid:
+          type: string
+        data:
+          type: object
+          additionalProperties: true
+    SetUsersInput:
+      type: object
+      required:
+        - customerId
+        - users
+      properties:
+        customerId:
+          type: string
+          description: Payment-provider customer ID (for example a Stripe customer ID).
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingUser'
+    BillingUser:
+      type: object
+      required:
+        - userId
+        - data
+      properties:
+        userId:
+          type: string
+          description: Internal user identifier.
+        data:
+          type: object
+          required:
+            - email
+            - name
+            - billingAdmin
+          properties:
+            email:
+              type: string
+              format: email
+            name:
+              type: string
+            phone:
+              type: string
+            billingAdmin:
+              type: boolean
+              description: When true, this user receives Payment Recovery emails.
+          additionalProperties: true
