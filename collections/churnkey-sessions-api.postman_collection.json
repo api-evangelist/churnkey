@@ -1,0 +1,568 @@
+{
+  "item": [
+    {
+      "id": "b49d20a7-c26e-4df8-9e15-b61afed4d468",
+      "name": "Sessions",
+      "description": {
+        "content": "Cancel Flow session data and aggregations (Data API).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "06d8a4ce-e533-4b02-8115-6e8919872099",
+          "name": "List Cancel Flow sessions",
+          "request": {
+            "name": "List Cancel Flow sessions",
+            "description": {
+              "content": "Returns an array of Cancel Flow sessions (maximum 10,000 per request), filterable by customer, plan, blueprint, A/B test, offer type, save type, coupon, billing interval, and date range.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "sessions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100",
+                  "description": "Number of sessions to return (default 100, max 10000)."
+                },
+                {
+                  "disabled": false,
+                  "key": "skip",
+                  "value": "<integer>",
+                  "description": "Pagination offset."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>",
+                  "description": "Filter sessions on or after this date."
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "Filter sessions on or before this date."
+                },
+                {
+                  "disabled": false,
+                  "key": "customerId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "planId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "blueprintId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "abtest",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "trial",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "canceled",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "aborted",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "bounced",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "billingInterval",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "offerType",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "saveType",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "couponId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pauseDuration",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "26b448d3-f81d-4be8-a396-19e2e40761da",
+              "name": "An array of sessions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "customerId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "planId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "blueprintId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "abtest",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "trial",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "canceled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "aborted",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "bounced",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "billingInterval",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offerType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "saveType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "couponId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pauseDuration",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-ck-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"customerId\": \"string\",\n    \"planId\": \"string\",\n    \"blueprintId\": \"string\",\n    \"billingInterval\": \"MONTH\",\n    \"trial\": true,\n    \"canceled\": true,\n    \"aborted\": true,\n    \"offerType\": \"REDIRECT\",\n    \"saveType\": \"DISCOUNT\",\n    \"couponId\": \"string\",\n    \"pauseDuration\": 8604,\n    \"surveyResponse\": \"string\",\n    \"feedback\": \"string\",\n    \"createdAt\": \"1989-06-02T14:11:14.574Z\"\n  },\n  {\n    \"id\": \"string\",\n    \"customerId\": \"string\",\n    \"planId\": \"string\",\n    \"blueprintId\": \"string\",\n    \"billingInterval\": \"WEEK\",\n    \"trial\": false,\n    \"canceled\": true,\n    \"aborted\": false,\n    \"offerType\": \"DISCOUNT\",\n    \"saveType\": \"REDIRECT\",\n    \"couponId\": \"string\",\n    \"pauseDuration\": 4186,\n    \"surveyResponse\": \"string\",\n    \"feedback\": \"string\",\n    \"createdAt\": \"1975-09-23T11:35:26.884Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9025df96-9b10-4f72-afcf-90f1423d1751",
+              "name": "Missing or invalid API key / App ID headers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "skip",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "customerId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "planId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "blueprintId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "abtest",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "trial",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "canceled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "aborted",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "bounced",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "billingInterval",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offerType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "saveType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "couponId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pauseDuration",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-ck-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cb3cc6cd-c3a9-446e-b9e2-ae7ef397a6ec",
+          "name": "Aggregate session data",
+          "request": {
+            "name": "Aggregate session data",
+            "description": {
+              "content": "Returns grouped session counts with optional breakdown fields (for example month, planId, offerType, saveType, couponId, billingInterval, blueprintId, abtest). Accepts the same filters as List Sessions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "data",
+                "session-aggregation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "breakdown",
+                  "value": "<string>",
+                  "description": "Comma-separated grouping fields - any of month, trial, billingInterval, planId, aborted, canceled, offerType, saveType, couponId, pauseDuration, blueprintId, abtest."
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "853b59b7-f86d-4d37-9833-80043c30e8ef",
+              "name": "Grouped session counts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "session-aggregation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "breakdown",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-ck-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"count\": 6123,\n    \"key_0\": 452,\n    \"key_1\": 6363\n  },\n  {\n    \"count\": 5781,\n    \"key_0\": 2320\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d90d8271-c32d-45ea-8d9d-3e19db0676d1",
+              "name": "Missing or invalid API key / App ID headers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "data",
+                    "session-aggregation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "breakdown",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-ck-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.churnkey.co/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-ck-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8a178b76-3b5a-49ed-8bc5-9964f9b0cab3",
+    "name": "Churnkey Billing Contacts Sessions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST surface for Churnkey, retention and growth infrastructure for subscription companies. This document covers Churnkey's server-to-server REST endpoints: the Data API (Cancel Flow sessions and aggregations, plus GDPR data-subject requests) under https://api.churnkey.co/v1/data, and the Event/Customer API (event tracking, customer updates, and billing-contact management for Failed Payment Recovery) under https://api.churnkey.co/v1/api. All requests are authenticated with an App ID header (x-ck-app) and an API key header. The Data API uses a Data API key (x-ck-api-key from Settings > Account); the event and billing-contact endpoints use a Churnkey API key. Churnkey's personalized Cancel Flows are delivered client-side via a JavaScript SDK authorized with a server-computed HMAC-SHA256 authHash and are not modeled as REST paths here. Endpoint paths and parameters below reflect Churnkey's public documentation as of the review date; request and response schemas are honestly modeled where the docs do not publish a full schema.\n\nContact Support:\n Name: Churnkey",
+      "type": "text/plain"
+    }
+  }
+}

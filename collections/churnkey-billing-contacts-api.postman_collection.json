@@ -1,0 +1,370 @@
+{
+  "item": [
+    {
+      "id": "b6510e23-3cba-4c55-9380-9224fa3b68ac",
+      "name": "Billing Contacts",
+      "description": {
+        "content": "Billing-contact management for Failed Payment Recovery.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0df671d0-2615-4711-8fdd-cadb524e451d",
+          "name": "Set billing contacts for a customer",
+          "request": {
+            "name": "Set billing contacts for a customer",
+            "description": {
+              "content": "Attaches one or more users to a customer and flags which are billing admins. Billing admins receive Failed Payment Recovery (dunning) communications.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "events",
+                "customer-update",
+                "set-users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"<string>\",\n  \"users\": [\n    {\n      \"userId\": \"<string>\",\n      \"data\": {\n        \"email\": \"<email>\",\n        \"name\": \"<string>\",\n        \"billingAdmin\": \"<boolean>\",\n        \"phone\": \"<string>\"\n      }\n    },\n    {\n      \"userId\": \"<string>\",\n      \"data\": {\n        \"email\": \"<email>\",\n        \"name\": \"<string>\",\n        \"billingAdmin\": \"<boolean>\",\n        \"phone\": \"<string>\"\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c234a34c-0d00-40b1-8e57-d36e04b70a07",
+              "name": "The billing contacts were set.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "events",
+                    "customer-update",
+                    "set-users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-ck-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerId\": \"<string>\",\n  \"users\": [\n    {\n      \"userId\": \"<string>\",\n      \"data\": {\n        \"email\": \"<email>\",\n        \"name\": \"<string>\",\n        \"billingAdmin\": \"<boolean>\",\n        \"phone\": \"<string>\"\n      }\n    },\n    {\n      \"userId\": \"<string>\",\n      \"data\": {\n        \"email\": \"<email>\",\n        \"name\": \"<string>\",\n        \"billingAdmin\": \"<boolean>\",\n        \"phone\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7309fa5a-9ecb-4238-88b8-83ffc7b92ad4",
+              "name": "Missing or invalid API key / App ID headers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "events",
+                    "customer-update",
+                    "set-users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-ck-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerId\": \"<string>\",\n  \"users\": [\n    {\n      \"userId\": \"<string>\",\n      \"data\": {\n        \"email\": \"<email>\",\n        \"name\": \"<string>\",\n        \"billingAdmin\": \"<boolean>\",\n        \"phone\": \"<string>\"\n      }\n    },\n    {\n      \"userId\": \"<string>\",\n      \"data\": {\n        \"email\": \"<email>\",\n        \"name\": \"<string>\",\n        \"billingAdmin\": \"<boolean>\",\n        \"phone\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bc413521-74db-4022-b37a-a68718098e1f",
+          "name": "Set billing contacts for many customers",
+          "request": {
+            "name": "Set billing contacts for many customers",
+            "description": {
+              "content": "Bulk variant of set-users - each array item uses the same structure as the single update.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "events",
+                "customer-update",
+                "set-users",
+                "bulk"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"customerId\": \"<string>\",\n    \"users\": [\n      {\n        \"userId\": \"<string>\",\n        \"data\": {\n          \"email\": \"<email>\",\n          \"name\": \"<string>\",\n          \"billingAdmin\": \"<boolean>\",\n          \"phone\": \"<string>\"\n        }\n      },\n      {\n        \"userId\": \"<string>\",\n        \"data\": {\n          \"email\": \"<email>\",\n          \"name\": \"<string>\",\n          \"billingAdmin\": \"<boolean>\",\n          \"phone\": \"<string>\"\n        }\n      }\n    ]\n  },\n  {\n    \"customerId\": \"<string>\",\n    \"users\": [\n      {\n        \"userId\": \"<string>\",\n        \"data\": {\n          \"email\": \"<email>\",\n          \"name\": \"<string>\",\n          \"billingAdmin\": \"<boolean>\",\n          \"phone\": \"<string>\"\n        }\n      },\n      {\n        \"userId\": \"<string>\",\n        \"data\": {\n          \"email\": \"<email>\",\n          \"name\": \"<string>\",\n          \"billingAdmin\": \"<boolean>\",\n          \"phone\": \"<string>\"\n        }\n      }\n    ]\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b9f1fb35-87f0-4079-b3ec-aec7e9ae40b3",
+              "name": "The billing contacts were set.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "events",
+                    "customer-update",
+                    "set-users",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-ck-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"customerId\": \"<string>\",\n    \"users\": [\n      {\n        \"userId\": \"<string>\",\n        \"data\": {\n          \"email\": \"<email>\",\n          \"name\": \"<string>\",\n          \"billingAdmin\": \"<boolean>\",\n          \"phone\": \"<string>\"\n        }\n      },\n      {\n        \"userId\": \"<string>\",\n        \"data\": {\n          \"email\": \"<email>\",\n          \"name\": \"<string>\",\n          \"billingAdmin\": \"<boolean>\",\n          \"phone\": \"<string>\"\n        }\n      }\n    ]\n  },\n  {\n    \"customerId\": \"<string>\",\n    \"users\": [\n      {\n        \"userId\": \"<string>\",\n        \"data\": {\n          \"email\": \"<email>\",\n          \"name\": \"<string>\",\n          \"billingAdmin\": \"<boolean>\",\n          \"phone\": \"<string>\"\n        }\n      },\n      {\n        \"userId\": \"<string>\",\n        \"data\": {\n          \"email\": \"<email>\",\n          \"name\": \"<string>\",\n          \"billingAdmin\": \"<boolean>\",\n          \"phone\": \"<string>\"\n        }\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b9fafb8a-f560-4ea0-ac87-0bf2b4821692",
+              "name": "Missing or invalid API key / App ID headers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "events",
+                    "customer-update",
+                    "set-users",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-ck-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"customerId\": \"<string>\",\n    \"users\": [\n      {\n        \"userId\": \"<string>\",\n        \"data\": {\n          \"email\": \"<email>\",\n          \"name\": \"<string>\",\n          \"billingAdmin\": \"<boolean>\",\n          \"phone\": \"<string>\"\n        }\n      },\n      {\n        \"userId\": \"<string>\",\n        \"data\": {\n          \"email\": \"<email>\",\n          \"name\": \"<string>\",\n          \"billingAdmin\": \"<boolean>\",\n          \"phone\": \"<string>\"\n        }\n      }\n    ]\n  },\n  {\n    \"customerId\": \"<string>\",\n    \"users\": [\n      {\n        \"userId\": \"<string>\",\n        \"data\": {\n          \"email\": \"<email>\",\n          \"name\": \"<string>\",\n          \"billingAdmin\": \"<boolean>\",\n          \"phone\": \"<string>\"\n        }\n      },\n      {\n        \"userId\": \"<string>\",\n        \"data\": {\n          \"email\": \"<email>\",\n          \"name\": \"<string>\",\n          \"billingAdmin\": \"<boolean>\",\n          \"phone\": \"<string>\"\n        }\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.churnkey.co/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-ck-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "09960861-9418-41f5-8005-6ea55def6302",
+    "name": "Churnkey Billing Contacts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST surface for Churnkey, retention and growth infrastructure for subscription companies. This document covers Churnkey's server-to-server REST endpoints: the Data API (Cancel Flow sessions and aggregations, plus GDPR data-subject requests) under https://api.churnkey.co/v1/data, and the Event/Customer API (event tracking, customer updates, and billing-contact management for Failed Payment Recovery) under https://api.churnkey.co/v1/api. All requests are authenticated with an App ID header (x-ck-app) and an API key header. The Data API uses a Data API key (x-ck-api-key from Settings > Account); the event and billing-contact endpoints use a Churnkey API key. Churnkey's personalized Cancel Flows are delivered client-side via a JavaScript SDK authorized with a server-computed HMAC-SHA256 authHash and are not modeled as REST paths here. Endpoint paths and parameters below reflect Churnkey's public documentation as of the review date; request and response schemas are honestly modeled where the docs do not publish a full schema.\n\nContact Support:\n Name: Churnkey",
+      "type": "text/plain"
+    }
+  }
+}

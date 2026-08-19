@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Churnkey Billing Contacts Data Subject Requests API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-ck-api-key",
+      "value": "{{x-ck-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Data Subject Requests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GDPR data-subject access request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.churnkey.co/v1/data/dsr/access",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve all personal data Churnkey has stored for a user, identified by email."
+        },
+        {
+          "info": {
+            "name": "GDPR data-subject deletion request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.churnkey.co/v1/data/dsr/delete",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete the personal data Churnkey has stored for a user, identified by email. May be rejected if the data volume exceeds allowed limits."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

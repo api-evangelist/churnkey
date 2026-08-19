@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Churnkey Billing Contacts API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-ck-api-key",
+      "value": "{{x-ck-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Billing Contacts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Set billing contacts for a customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.churnkey.co/v1/api/events/customer-update/set-users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Attaches one or more users to a customer and flags which are billing admins. Billing admins receive Failed Payment Recovery (dunning) communications."
+        },
+        {
+          "info": {
+            "name": "Set billing contacts for many customers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.churnkey.co/v1/api/events/customer-update/set-users/bulk",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk variant of set-users - each array item uses the same structure as the single update."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

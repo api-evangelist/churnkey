@@ -1,0 +1,361 @@
+{
+  "item": [
+    {
+      "id": "472a929f-3803-4414-b0c8-789398d1e26c",
+      "name": "Events",
+      "description": {
+        "content": "Customer event tracking and passive data enrichment.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "af7e843f-b96e-45bd-9b1e-240b7385ebdc",
+          "name": "Create a customer event",
+          "request": {
+            "name": "Create a customer event",
+            "description": {
+              "content": "Records a single customer event for segmentation, targeting, and passive data collection.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "events",
+                "new"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event\": \"<string>\",\n  \"customerId\": \"<string>\",\n  \"uid\": \"<string>\",\n  \"eventDate\": \"<dateTime>\",\n  \"eventData\": {\n    \"key_0\": 2275.605829532491,\n    \"key_1\": 3660\n  },\n  \"user\": {\n    \"uid\": \"<string>\",\n    \"data\": {\n      \"key_0\": true\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b665f485-6530-4a21-bba9-53968f9bdd4a",
+              "name": "The event was recorded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "events",
+                    "new"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-ck-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event\": \"<string>\",\n  \"customerId\": \"<string>\",\n  \"uid\": \"<string>\",\n  \"eventDate\": \"<dateTime>\",\n  \"eventData\": {\n    \"key_0\": true\n  },\n  \"user\": {\n    \"uid\": \"<string>\",\n    \"data\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0a1c6288-83d8-4d0f-8646-bdbb98a9fba4",
+              "name": "Missing or invalid API key / App ID headers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "events",
+                    "new"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-ck-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event\": \"<string>\",\n  \"customerId\": \"<string>\",\n  \"uid\": \"<string>\",\n  \"eventDate\": \"<dateTime>\",\n  \"eventData\": {\n    \"key_0\": true\n  },\n  \"user\": {\n    \"uid\": \"<string>\",\n    \"data\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8da7dfea-a63a-4b03-99ce-cbe6fab99b6e",
+          "name": "Create up to 100 events",
+          "request": {
+            "name": "Create up to 100 events",
+            "description": {
+              "content": "Records up to 100 customer events in a single request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "events",
+                "bulk"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"event\": \"<string>\",\n    \"customerId\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"eventDate\": \"<dateTime>\",\n    \"eventData\": {\n      \"key_0\": 7379.0891532728765,\n      \"key_1\": 1487.2301677270727,\n      \"key_2\": \"string\",\n      \"key_3\": 7027\n    },\n    \"user\": {\n      \"uid\": \"<string>\",\n      \"data\": {\n        \"key_0\": \"string\",\n        \"key_1\": true\n      }\n    }\n  },\n  {\n    \"event\": \"<string>\",\n    \"customerId\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"eventDate\": \"<dateTime>\",\n    \"eventData\": {\n      \"key_0\": 4592.872658790053\n    },\n    \"user\": {\n      \"uid\": \"<string>\",\n      \"data\": {\n        \"key_0\": false\n      }\n    }\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2d901128-e3d4-4ddf-a43e-cbe81d118878",
+              "name": "The events were recorded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "events",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-ck-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"event\": \"<string>\",\n    \"customerId\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"eventDate\": \"<dateTime>\",\n    \"eventData\": {\n      \"key_0\": true\n    },\n    \"user\": {\n      \"uid\": \"<string>\",\n      \"data\": {\n        \"key_0\": false,\n        \"key_1\": 2253.766601670668,\n        \"key_2\": true\n      }\n    }\n  },\n  {\n    \"event\": \"<string>\",\n    \"customerId\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"eventDate\": \"<dateTime>\",\n    \"eventData\": {\n      \"key_0\": 7795.71446125277,\n      \"key_1\": \"string\",\n      \"key_2\": 1396\n    },\n    \"user\": {\n      \"uid\": \"<string>\",\n      \"data\": {\n        \"key_0\": 8856\n      }\n    }\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b66866a-51cf-43df-9737-8210cf6aca10",
+              "name": "Missing or invalid API key / App ID headers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "events",
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-ck-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"event\": \"<string>\",\n    \"customerId\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"eventDate\": \"<dateTime>\",\n    \"eventData\": {\n      \"key_0\": true\n    },\n    \"user\": {\n      \"uid\": \"<string>\",\n      \"data\": {\n        \"key_0\": false,\n        \"key_1\": 2253.766601670668,\n        \"key_2\": true\n      }\n    }\n  },\n  {\n    \"event\": \"<string>\",\n    \"customerId\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"eventDate\": \"<dateTime>\",\n    \"eventData\": {\n      \"key_0\": 7795.71446125277,\n      \"key_1\": \"string\",\n      \"key_2\": 1396\n    },\n    \"user\": {\n      \"uid\": \"<string>\",\n      \"data\": {\n        \"key_0\": 8856\n      }\n    }\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.churnkey.co/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-ck-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "82ea0331-fc9c-4eec-8ba6-2fad0d39060a",
+    "name": "Churnkey Billing Contacts Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST surface for Churnkey, retention and growth infrastructure for subscription companies. This document covers Churnkey's server-to-server REST endpoints: the Data API (Cancel Flow sessions and aggregations, plus GDPR data-subject requests) under https://api.churnkey.co/v1/data, and the Event/Customer API (event tracking, customer updates, and billing-contact management for Failed Payment Recovery) under https://api.churnkey.co/v1/api. All requests are authenticated with an App ID header (x-ck-app) and an API key header. The Data API uses a Data API key (x-ck-api-key from Settings > Account); the event and billing-contact endpoints use a Churnkey API key. Churnkey's personalized Cancel Flows are delivered client-side via a JavaScript SDK authorized with a server-computed HMAC-SHA256 authHash and are not modeled as REST paths here. Endpoint paths and parameters below reflect Churnkey's public documentation as of the review date; request and response schemas are honestly modeled where the docs do not publish a full schema.\n\nContact Support:\n Name: Churnkey",
+      "type": "text/plain"
+    }
+  }
+}

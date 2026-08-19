@@ -1,0 +1,157 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Churnkey Billing Contacts Sessions API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-ck-api-key",
+      "value": "{{x-ck-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sessions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Cancel Flow sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.churnkey.co/v1/data/sessions",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of sessions to return (default 100, max 10000)."
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Filter sessions on or after this date."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "Filter sessions on or before this date."
+              },
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "planId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "blueprintId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "abtest",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "trial",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "canceled",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "aborted",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "bounced",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "billingInterval",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offerType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "saveType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "couponId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pauseDuration",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns an array of Cancel Flow sessions (maximum 10,000 per request), filterable by customer, plan, blueprint, A/B test, offer type, save type, coupon, billing interval, and date range."
+        },
+        {
+          "info": {
+            "name": "Aggregate session data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.churnkey.co/v1/data/session-aggregation",
+            "params": [
+              {
+                "name": "breakdown",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated grouping fields - any of month, trial, billingInterval, planId, aborted, canceled, offerType, saveType, couponId, pauseDuration, blueprintId, abtest."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns grouped session counts with optional breakdown fields (for example month, planId, offerType, saveType, couponId, billingInterval, blueprintId, abtest). Accepts the same filters as List Sessions."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
