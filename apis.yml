@@ -32,6 +32,15 @@ tags:
 - Failed Payment Recovery
 - Dunning
 - Reactivation
+- Subscription
+- Software-as-a-Service
+tags_raw:
+- Churn Prevention
+- Retention
+- Cancellation Flows
+- Failed Payment Recovery
+- Dunning
+- Reactivation
 - Subscriptions
 - SaaS
 created: '2026-07-10'
@@ -141,6 +150,8 @@ apis:
   humanURL: https://docs.churnkey.co/data-api
   baseURL: https://api.churnkey.co/v1/data
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
