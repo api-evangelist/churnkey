@@ -1,11 +1,7 @@
 {
   "provider": "churnkey",
   "sources": [
-    "churnkey-billing-contacts-api-openapi.yml",
-    "churnkey-customers-api-openapi.yml",
-    "churnkey-data-subject-requests-api-openapi.yml",
-    "churnkey-events-api-openapi.yml",
-    "churnkey-sessions-api-openapi.yml"
+    "_original/churnkey-openapi.yml"
   ],
   "outputs": [
     "churnkey-billing-contacts-api-openapi.yml",
@@ -17,6 +13,16 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "churnkey-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "churnkey-billing-contacts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "churnkey-customers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "churnkey-data-subject-requests-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "churnkey-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "churnkey-sessions-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

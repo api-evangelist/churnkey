@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Churnkey Billing Contacts Sessions API
-  description: 'REST surface for Churnkey, retention and growth infrastructure for subscription companies. This document covers Churnkey''s server-to-server REST endpoints: the Data API (Cancel Flow sessions and aggregations, plus GDPR data-subject requests) under https://api.churnkey.co/v1/data, and the Event/Customer API (event tracking, customer updates, and billing-contact management for Failed Payment Recovery) under https://api.churnkey.co/v1/api. All requests are authenticated with an App ID header (x-ck-app) and an API key header. The Data API uses a Data API key (x-ck-api-key from Settings > Account); the event and billing-contact endpoints use a Churnkey API key. Churnkey''s personalized Cancel Flows are delivered client-side via a JavaScript SDK authorized with a server-computed HMAC-SHA256 authHash and are not modeled as REST paths here. Endpoint paths and parameters below reflect Churnkey''s public documentation as of the review date; request and response schemas are honestly modeled where the docs do not publish a full schema.'
+  title: Churnkey Sessions API
+  description: REST surface for Churnkey, retention and growth infrastructure for subscription companies.
   version: '1.0'
   contact:
     name: Churnkey
@@ -165,24 +165,14 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key / App ID headers.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    SessionAggregate:
-      type: object
-      description: A grouped session count keyed by the requested breakdown fields.
-      properties:
-        count:
-          type: integer
-      additionalProperties: true
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
     Session:
       type: object
       description: A Cancel Flow session. Fields below are modeled from the documented filters and webhook payloads; the full response schema is not published.
@@ -237,13 +227,23 @@ components:
         createdAt:
           type: string
           format: date-time
-  responses:
-    Unauthorized:
-      description: Missing or invalid API key / App ID headers.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+    SessionAggregate:
+      type: object
+      description: A grouped session count keyed by the requested breakdown fields.
+      properties:
+        count:
+          type: integer
+      additionalProperties: true
   securitySchemes:
     apiKeyAuth:
       type: apiKey
