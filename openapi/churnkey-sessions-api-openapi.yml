@@ -165,14 +165,17 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    Unauthorized:
-      description: Missing or invalid API key / App ID headers.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
     Session:
       type: object
       description: A Cancel Flow session. Fields below are modeled from the documented filters and webhook payloads; the full response schema is not published.
@@ -227,16 +230,6 @@ components:
         createdAt:
           type: string
           format: date-time
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
     SessionAggregate:
       type: object
       description: A grouped session count keyed by the requested breakdown fields.
@@ -244,6 +237,13 @@ components:
         count:
           type: integer
       additionalProperties: true
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key / App ID headers.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKeyAuth:
       type: apiKey

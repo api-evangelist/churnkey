@@ -73,14 +73,6 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
-    DsrRequest:
-      type: object
-      required:
-      - email
-      properties:
-        email:
-          type: string
-          format: email
     Error:
       type: object
       properties:
@@ -91,6 +83,14 @@ components:
               type: string
             message:
               type: string
+    DsrRequest:
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          format: email
   securitySchemes:
     apiKeyAuth:
       type: apiKey

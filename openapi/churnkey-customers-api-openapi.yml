@@ -42,24 +42,7 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    Unauthorized:
-      description: Missing or invalid API key / App ID headers.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
     CustomerUpdate:
       type: object
       description: At least one of uid or customerId is required.
@@ -74,6 +57,16 @@ components:
           description: Customer attributes used for segmentation and merge tags.
         user:
           $ref: '#/components/schemas/B2BUser'
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
     B2BUser:
       type: object
       properties:
@@ -82,6 +75,13 @@ components:
         data:
           type: object
           additionalProperties: true
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key / App ID headers.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKeyAuth:
       type: apiKey
