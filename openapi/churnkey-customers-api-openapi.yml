@@ -43,20 +43,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    CustomerUpdate:
-      type: object
-      description: At least one of uid or customerId is required.
-      properties:
-        uid:
-          type: string
-        customerId:
-          type: string
-        customerData:
-          type: object
-          additionalProperties: true
-          description: Customer attributes used for segmentation and merge tags.
-        user:
-          $ref: '#/components/schemas/B2BUser'
     Error:
       type: object
       properties:
@@ -75,6 +61,20 @@ components:
         data:
           type: object
           additionalProperties: true
+    CustomerUpdate:
+      type: object
+      description: At least one of uid or customerId is required.
+      properties:
+        uid:
+          type: string
+        customerId:
+          type: string
+        customerData:
+          type: object
+          additionalProperties: true
+          description: Customer attributes used for segmentation and merge tags.
+        user:
+          $ref: '#/components/schemas/B2BUser'
   responses:
     Unauthorized:
       description: Missing or invalid API key / App ID headers.
