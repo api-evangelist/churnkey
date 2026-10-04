@@ -200,6 +200,9 @@ apis:
   - type: Documentation
     url: https://docs.churnkey.co/failed-payment-recovery/billing-contact-api/
 common:
+- type: CapabilityMap
+  url: capabilities/churnkey-capability-edges.yml
+  name: Churnkey Business Capability Map
 - type: AgenticAccess
   url: agentic-access/churnkey-agentic-access.yml
 - type: TrustCenter
