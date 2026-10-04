@@ -69,17 +69,14 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key / App ID headers.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
     BillingUser:
       type: object
       required:
@@ -107,6 +104,16 @@ components:
               type: boolean
               description: When true, this user receives Payment Recovery emails.
           additionalProperties: true
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
     SetUsersInput:
       type: object
       required:
@@ -120,13 +127,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BillingUser'
-  responses:
-    Unauthorized:
-      description: Missing or invalid API key / App ID headers.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKeyAuth:
       type: apiKey

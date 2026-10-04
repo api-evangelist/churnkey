@@ -71,14 +71,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    B2BUser:
-      type: object
-      properties:
-        uid:
-          type: string
-        data:
-          type: object
-          additionalProperties: true
     Error:
       type: object
       properties:
@@ -89,6 +81,14 @@ components:
               type: string
             message:
               type: string
+    B2BUser:
+      type: object
+      properties:
+        uid:
+          type: string
+        data:
+          type: object
+          additionalProperties: true
     EventInput:
       type: object
       required:
