@@ -165,6 +165,13 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key / App ID headers.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Session:
       type: object
@@ -220,6 +227,13 @@ components:
         createdAt:
           type: string
           format: date-time
+    SessionAggregate:
+      type: object
+      description: A grouped session count keyed by the requested breakdown fields.
+      properties:
+        count:
+          type: integer
+      additionalProperties: true
     Error:
       type: object
       properties:
@@ -230,20 +244,6 @@ components:
               type: string
             message:
               type: string
-    SessionAggregate:
-      type: object
-      description: A grouped session count keyed by the requested breakdown fields.
-      properties:
-        count:
-          type: integer
-      additionalProperties: true
-  responses:
-    Unauthorized:
-      description: Missing or invalid API key / App ID headers.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKeyAuth:
       type: apiKey

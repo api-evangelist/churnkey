@@ -71,24 +71,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
-    B2BUser:
-      type: object
-      properties:
-        uid:
-          type: string
-        data:
-          type: object
-          additionalProperties: true
     EventInput:
       type: object
       required:
@@ -113,6 +95,24 @@ components:
           description: Key-value event details.
         user:
           $ref: '#/components/schemas/B2BUser'
+    B2BUser:
+      type: object
+      properties:
+        uid:
+          type: string
+        data:
+          type: object
+          additionalProperties: true
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
   responses:
     Unauthorized:
       description: Missing or invalid API key / App ID headers.
