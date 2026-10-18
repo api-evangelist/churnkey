@@ -143,6 +143,8 @@ apis:
   humanURL: https://docs.churnkey.co/data-api
   baseURL: https://api.churnkey.co/v1/data
   tags:
+  - DSAR
+  tags_raw:
   - Data Subject Requests
   properties:
   - type: OpenAPI
