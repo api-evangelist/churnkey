@@ -16,6 +16,23 @@ edges:
   detected: '2026-10-15'
   detected_by: mirror-platform-listings.py
   category: revenue_optimization
+- partner_name: Slack (own)
+  partner: slack
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://slack.com/marketplace/A01URJ9CLAW-churnkey-connect
+  mirror_of: slack/integrations/slack-integration-edges.yml
+  apps:
+  - Churnkey Connect
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Slack app
 - partner_name: MCP Registry
   partner: mcp
   partner_match: register
@@ -31,7 +48,7 @@ edges:
     registered_name: co.churnkey/churnkey
     register_id: co.churnkey/churnkey
     detected_by: sweep-agent-tools.py
-    detected: '2026-10-15'
+    detected: '2026-10-19'
   mcp_registry:
     servers:
     - co.churnkey/churnkey
@@ -103,23 +120,6 @@ edges:
     builder: Fivetran
   detected_by: sweep-data-integration.py
   first_seen: '2026-10-18'
-- partner_name: Slack (own)
-  partner: slack
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://slack.com/marketplace/A01URJ9CLAW-churnkey-connect
-  mirror_of: slack/integrations/slack-integration-edges.yml
-  apps:
-  - Churnkey Connect
-  listing_count: 1
-  detected: '2026-10-18'
-  detected_by: mirror-platform-listings.py
-  category: Slack app
 generated: '2026-10-14'
 method: searched
 checked:
