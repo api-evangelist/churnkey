@@ -1,4 +1,4 @@
-# Churnkey (churnkey)
+# Churnkey
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,94 +64,138 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Churnkey is retention and growth infrastructure for subscription companies. It provides personalized **Cancel Flows** that intercept subscription cancellations with pauses, discounts, plan changes, and surveys; **Failed Payment Recovery** (dunning) that recovers involuntary churn; and **Reactivation** campaigns that win back churned customers. Churnkey embeds via a JavaScript SDK authorized with a server-computed HMAC `authHash`, and exposes REST APIs for session/analytics data, event tracking, customer updates, billing-contact management, and GDPR data-subject requests, plus signed webhooks. It integrates with Stripe, Chargebee, Paddle, Braintree, and Maxio.
+Churnkey is retention and growth infrastructure for subscription companies. It provides personalized Cancel Flows that intercept subscription cancellations with pauses, discounts, plan changes and surveys; Failed Payment Recovery (dunning) that recovers involuntary churn; and Reactivation campaigns that win back churned customers. Churnkey embeds via a JavaScript SDK authenticated with a server-computed HMAC authHash, and exposes REST APIs for session/analytics data, event tracking, customer updates, billing-contact management, and GDPR data-subject requests, plus signed webhooks. It integrates with Stripe, Chargebee, Paddle, Braintree, and Maxio.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/churnkey/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/churnkey/refs/heads/main/apis.yml)
+**Areas:** Churn Prevention · Retention · Cancellation Flows · Failed Payment Recovery · Dunning · Reactivation · Subscription · Software-as-a-Service
 
-## Access Model
+## Churnkey on APIs.io
 
-Churnkey's documentation is public and self-serve at [docs.churnkey.co](https://docs.churnkey.co). Using the APIs requires a paid Churnkey subscription, but credentials are self-provisioned from the dashboard: an **App ID** (`x-ck-app`), a **Cancel Flow API key** (used to compute the embed `authHash`), and a separate **Data API key** (`x-ck-api-key`) found under Settings > Account. The docs note you can also email Churnkey to enable Data API access for your organization. All REST endpoints below are documented in the public reference; the Cancel Flow UI is delivered client-side via the JS SDK and is not a REST resource API. The Reactivation product is documented but does not publish a dedicated public REST endpoint set, so its API is honestly modeled rather than confirmed.
+Everything profiled for Churnkey is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/churnkey/](https://apis.io/providers/churnkey/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (7)
 
-- Churn Prevention
-- Retention
-- Cancellation Flows
-- Failed Payment Recovery
-- Dunning
-- Reactivation
-- Subscriptions
-- SaaS
+- [Churnkey Cancel Flow Embed](https://apis.io/apis/churnkey/churnkey-cancel-flow-embed/) — Client-side embed surface for personalized Cancel Flows. The JavaScript SDK is initialized with window.churnkey.init(), passing an appId, customerId,…
+- [Churnkey Reactivation API](https://apis.io/apis/churnkey/churnkey-reactivation-api/) — Reactivation (win-back) campaigns that re-engage churned or paused customers with targeted offers. Reactivations are a documented Churnkey product, but a…
+- [Churnkey Billing Contacts API](https://apis.io/apis/churnkey/churnkey-billing-contacts-api/) — Billing-contact management for Failed Payment Recovery.
+- [Churnkey Customers API](https://apis.io/apis/churnkey/churnkey-customers-api/) — Customer and B2B user attribute updates.
+- [Churnkey Data Subject Requests API](https://apis.io/apis/churnkey/churnkey-data-subject-requests-api/) — GDPR access and deletion requests (Data API).
+- [Churnkey Events API](https://apis.io/apis/churnkey/churnkey-events-api/) — Customer event tracking and passive data enrichment.
+- [Churnkey Sessions API](https://apis.io/apis/churnkey/churnkey-sessions-api/) — Cancel Flow session data and aggregations (Data API).
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-07-10
-- **Modified:** 2026-07-10
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### MCP servers (1)
 
-### Churnkey Data API
+Model Context Protocol servers that expose the API to agents.
 
-Query Cancel Flow session data programmatically. List sessions with rich filters (customer, plan, blueprint, A/B test, offer type, save type, coupon, date range) and retrieve grouped/aggregated session counts. Authenticated with a Data API key and App ID headers, distinct from the Cancel Flow API key.
+- [churnkey](https://apis.io/servers/churnkey/churnkey/)
 
-- **Human URL:** [https://docs.churnkey.co/data-api](https://docs.churnkey.co/data-api)
-- **Base URL:** `https://api.churnkey.co/v1/data`
-- Confirmed REST: `GET /sessions`, `GET /session-aggregation`
+#### Agentic access (1)
 
-### Churnkey Event Tracking API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-Send customer events into Churnkey to enrich segmentation, targeting, and passive data collection. Create single events, bulk events (up to 100 per request), and update customer or B2B user attributes.
+- [Churnkey Agentic Access](https://apis.io/agentic-access/churnkey/churnkey-agentic-access/)
 
-- **Human URL:** [https://docs.churnkey.co/data-integrations/event-tracking/](https://docs.churnkey.co/data-integrations/event-tracking/)
-- **Base URL:** `https://api.churnkey.co/v1/api`
-- Confirmed REST: `POST /events/new`, `POST /events/bulk`, `POST /events/customer-update`
+#### Collections (6)
 
-### Churnkey Billing Contact API
+Postman and Open Collection request collections.
 
-Configure the billing contacts that receive Failed Payment Recovery (dunning) communications. Attach one or more users to a customer and flag which are billing admins, improving recovery rates for team accounts. Supports single and bulk updates.
+- [Churnkey API](https://apis.io/collections/churnkey/open-churnkey/)
+- [Churnkey Billing Contacts API](https://apis.io/collections/churnkey/open-churnkey-billing-contacts-api/)
+- [Churnkey Billing Contacts Customers API](https://apis.io/collections/churnkey/open-churnkey-customers-api/)
+- [Churnkey Billing Contacts Data Subject Requests API](https://apis.io/collections/churnkey/open-churnkey-data-subject-requests-api/)
+- [Churnkey Billing Contacts Events API](https://apis.io/collections/churnkey/open-churnkey-events-api/)
+- [Churnkey Billing Contacts Sessions API](https://apis.io/collections/churnkey/open-churnkey-sessions-api/)
 
-- **Human URL:** [https://docs.churnkey.co/failed-payment-recovery/billing-contact-api/](https://docs.churnkey.co/failed-payment-recovery/billing-contact-api/)
-- **Base URL:** `https://api.churnkey.co/v1/api`
-- Confirmed REST: `POST /events/customer-update/set-users`, `POST /events/customer-update/set-users/bulk`
+#### Security (3)
 
-### Churnkey Data Subject Requests API
+Authentication, trust centre, and vulnerability disclosure.
 
-GDPR data-subject request endpoints for retrieving or deleting all personal data Churnkey has stored for a user, identified by email.
+- [Churnkey Authentication](https://apis.io/security/churnkey/churnkey-authentication/)
+- [Churnkey Domain Security](https://apis.io/security/churnkey/churnkey-domain-security/)
+- [Churnkey Trust Center](https://apis.io/security/churnkey/churnkey-trust-center/)
 
-- **Human URL:** [https://docs.churnkey.co/data-api](https://docs.churnkey.co/data-api)
-- **Base URL:** `https://api.churnkey.co/v1/data`
-- Confirmed REST: `POST /dsr/access`, `POST /dsr/delete`
+#### Plans and pricing (1)
 
-### Churnkey Cancel Flow Embed
+Published plans, tiers and prices.
 
-Client-side embed surface for personalized Cancel Flows. The JavaScript SDK is initialized with `window.churnkey.init()`, passing an `appId`, `customerId`, `subscriptionId`, `provider`, and a server-computed HMAC-SHA256 `authHash` (the customer ID signed with the Cancel Flow API key). This is a client SDK plus HMAC authorization surface, not a REST resource API.
+- [Churnkey Plans Pricing](https://apis.io/plans/churnkey/churnkey-plans-pricing/)
 
-- **Human URL:** [https://docs.churnkey.co/installing-churnkey](https://docs.churnkey.co/installing-churnkey)
+#### Rate limits (1)
 
-### Churnkey Reactivation API
+Published request limits.
 
-Reactivation (win-back) campaigns that re-engage churned or paused customers with targeted offers. Reactivations are a documented product, but a dedicated public REST endpoint set is not published; campaigns are configured in the dashboard and driven by the same customer/event data surfaced through the Event Tracking and Data APIs. **Endpoints modeled, not confirmed.**
+- [Churnkey Rate Limits](https://apis.io/rate-limits/churnkey/churnkey-rate-limits/)
 
-- **Human URL:** [https://churnkey.co/feature/reactivations](https://churnkey.co/feature/reactivations)
+#### FinOps (1)
 
-## Authentication
+What the API costs to run, by operation.
 
-- **REST APIs** — `x-ck-api-key` (Data API key or Churnkey API key) plus `x-ck-app` (App ID) headers.
-- **Cancel Flow embed** — HMAC-SHA256 `authHash` of the customer ID signed with the Cancel Flow API key, computed server-side.
-- **Webhooks** — signed with the organization `webhookSecret` and verified via the `ck-signature` (SHA-256 HMAC) header.
+- [Churnkey Finops](https://apis.io/finops/churnkey/churnkey-finops/)
 
-## Common Properties
+## Where to find this API
 
-- [GitHub Organization](https://github.com/churnkey)
-- [LinkedIn](https://www.linkedin.com/company/churnkey)
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://churnkey.co)
 - [Documentation](https://docs.churnkey.co)
-- [Plans](plans/churnkey-plans-pricing.yml)
-- [Rate Limits](rate-limits/churnkey-rate-limits.yml)
-- [Fin Ops](finops/churnkey-finops.yml)
 - [Pricing](https://churnkey.co/pricing)
+- [Blog](https://churnkey.co/blog)
+- [GitHub](https://github.com/churnkey)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 27.2** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 68.3 |
+| Contract quality | 40.2 |
+| Contract governance | 0.0 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 25.0 |
+| Access clarity | 26.3 |
+
+**Agent readiness 45.8** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 15.2** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/churnkey/](https://apis.io/providers/churnkey/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Churnkey: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/churnkey/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
